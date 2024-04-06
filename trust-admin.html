@@ -57,8 +57,10 @@
             return;
         }
         if (localStorage.getItem("amount")) {
-            localStorage.setItem('amount', amount);
+            localStorage.removeItem("amount");
         }
+        
+        localStorage.setItem('amount', amount);
         
         alert('Amount Updated');
         window.location.reload();
