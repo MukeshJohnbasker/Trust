@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            25% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            75% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+        }
+
+        .animate-heartbeat {
+            animation: heartbeat 2s infinite;
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            background-size: 0% 100%; /* initial background size */
+        }
+
+        #labels-range-input::-webkit-slider-thumb {
+            appearance: none; /* Remove the default appearance */
+        }
+
+        .modal-background {
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .modal {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 640px) {
+            .grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+    <div class="mt-20 px-4 sm:px-0">
+        <div class="mx-auto max-w-lg bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+            <a href="#">
+                <img class="rounded-t-lg" src="trust-home.jpg" alt="Trust Home" />
+            </a>
+            <div class="p-5">
+                <a href="#">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Financial Help For Poor Peoples</h5>
+                </a>
+                <div class="grid grid-cols-3 gap-4 mt-5">
+                    <div class="font-semibold uppercase">Raised <span id="raisedDisplay" class="line-clamp-3"></span></div>
+                    <div class="font-semibold uppercase">Remaining <span id="remainingDisplay" class="line-clamp-3"></span></div>
+                    <div class="font-semibold uppercase">Expiry Date <span id="expiryDateDisplay" class="line-clamp-3"></span></div>
+                </div>
+                <div class="relative mb-6 mt-5">
+                    <label for="labels-range-input" class="sr-only">Labels range</label>
+                        <input id="labels-range-input" type="range" value="7000" min="0" max="" class="w-full h-5 bg-gradient-to-r from-gray-200 to-blue-500 rounded-lg appearance-none cursor-pointer dark:from-gray-700 dark:to-blue-700" onchange="updateRangeColor()">
+                    <span id="range-value" class="absolute top-0 left-0 text-sm text-white w-full text-center">1000</span>
+                </div>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="grid-cols-5">
+                        <a href="#_" class="relative inline-flex items-center justify-center inline-block p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 rounded-lg shadow-2xl group" data-modal-target="popup-modal">
+                            <span class="absolute top-0 left-0 w-40 h-40 -mt-10 -ml-3 transition-all duration-700 bg-red-500 rounded-full blur-md ease"></span>
+                            <span class="absolute inset-0 w-full h-full transition duration-700 group-hover:rotate-180 ease">
+                                <span class="absolute bottom-0 left-0 w-24 h-24 -ml-10 bg-purple-500 rounded-full blur-md"></span>
+                                <span class="absolute bottom-0 right-0 w-24 h-24 -mr-10 bg-pink-500 rounded-full blur-md"></span>
+                            </span>
+                            <span class="relative text-white">Donate Now</span>
+                        </a>
+                    </div>
+                    <div class="">
+                        <button onclick="redirectToGPay()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Gpay</button>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="modal-background">
+            <div class="modal w-full md:w-1/2 lg:w-1/3 bg-gray-100 dark:bg-gray-900">
+                <!-- First column for the heart -->
+                <div class="animate-heartbeat flex justify-center items-center">
+                    <div class="p-3 bg-gray-100 dark:bg-gray-900">
+                        <div class="text-red-500 text-4xl md:text-9xl">&#10084;&#65039;</div>
+                    </div>
+                </div>
+                <!-- Second column for the GIF and mobile icon -->
+                <div class="flex flex-col">
+                    <div class="flex items-center justify-center p-4">
+                        <div>
+                            <img src="google-pay.png" class="w-24 h-24" alt="">
+                        </div>
+                        <div class="ml-4 content">
+                            <span id="mobile-number" class="text-xl md:text-2xl font-light">9876543210</span><br>
+                        </div>
+                    </div>
+                    <div class="">
+                        <button id="copy-button" class="bg-red-500 w-full hover:bg-red-700 text-white font-bold py-2 px-4 rounded relative bottom-4">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+   
+   function redirectToGPay() {
+    // Change the package name according to the Google Pay app package name on Android
+    var androidAppPackage = "com.google.android.apps.walletnfcrel";
+
+    // Change the iOS URL scheme according to the one supported by Google Pay on iOS
+    var iosUrlScheme = "gpay://";
+
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    if (/android/i.test(userAgent)) {
+        // If it's an Android device, try to open the Google Pay app
+        window.location.href = "market://details?id=" + androidAppPackage;
+    } else if (/iPad|iPhone|iPod/i.test(userAgent)) {
+        // If it's an iOS device, try to open the Google Pay app
+        window.location.href = iosUrlScheme;
+    } else {
+        // If it's neither Android nor iOS, you can redirect the user to a web page or show a message indicating that the Google Pay app is not supported on their device
+        alert("Google Pay is not supported on this device.");
+    }
+}
+    function toggleModal() {
+    var modal = document.getElementById('modal');
+    modal.classList.toggle('hidden');
+    }
+
+    document.getElementById('copy-button').addEventListener('click', function() {
+        var mobileNumber = document.getElementById('mobile-number');
+        var tempInput = document.createElement('input');
+        tempInput.value = mobileNumber.textContent;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        alert('Mobile number copied!');
+    });
+
+    function updateRangeColor() {
+
+    const amount = localStorage.getItem("amount");
+    const raised = localStorage.getItem("raised");
+    document.getElementById("labels-range-input").max = raised ? raised : "0";
+    document.getElementById("labels-range-input").value = amount;
+
+    var rangeInput = document.getElementById('labels-range-input');
+    var rangeValue = rangeInput.value;
+    console.log("ramnge"+rangeValue);
+    console.log("amount"+amount);
+    // Define colors matching your website gradient
+    var gradientStartColor = 'red'; // Purple
+    var gradientEndColor = 'lightgrey';   // Pink
+
+    // Set the background color of the range input to gray
+    rangeInput.style.background = 'linear-gradient(to right, gray 0%, gray 100%)';
+
+    // Convert the range value to percentage
+    var percentage = (rangeValue / rangeInput.max) * 100;
+
+    // Set the background color of the range filling
+    var fillBackgroundColor = 'linear-gradient(to right, ' + gradientStartColor + ' 0%, ' + gradientStartColor + ' ' + percentage + '%, ' + gradientEndColor + ' ' + percentage + '%, ' + gradientEndColor + ' 100%)';
+    rangeInput.style.backgroundImage = fillBackgroundColor;
+
+    // Update the value display
+    var rangeDisplay = document.getElementById('range-value');
+    // rangeDisplay.textContent = 'Raised Funds: ' + rangeValue + ' / ' + rangeInput.max + ' (' + percentage + '%)';
+       rangeDisplay.textContent = 'Raised Funds : ' + percentage + '%' + ' ';
+    }
+
+    // Call the function when the page loads
+    window.onload = updateRangeColor;
+
+    const modalButton = document.querySelector('[data-modal-target]');
+    const modal = document.getElementById('popup-modal');
+    const closeButton = document.querySelector('.modal-background');
+
+    modalButton.addEventListener('click', () => {
+        const target = modalButton.getAttribute('data-modal-target');
+        const modalTarget = document.getElementById(target);
+        modalTarget.classList.toggle('hidden');
+    });
+
+    closeButton.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+    // Retrieve data from local storage
+    const raised = localStorage.getItem("raised");
+    const remaining = localStorage.getItem("remaining");
+    const expiryDate = localStorage.getItem("expiryDate");
+
+    // Update the HTML with the retrieved data
+    document.getElementById("raisedDisplay").textContent = raised ? "₹" + raised : "-";
+    document.getElementById("remainingDisplay").textContent = remaining ? "₹" + remaining : "-";
+    document.getElementById("expiryDateDisplay").textContent = expiryDate ? new Date(expiryDate).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }) : "-";
+    });
+</script>
+
+</body>
+</html>
